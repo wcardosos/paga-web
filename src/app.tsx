@@ -1,10 +1,10 @@
-import { Header } from './components/header';
+import { BrowserRouter } from 'react-router-dom';
+import { Router } from './router';
 
 export function App() {
   return (
-    <main>
-      <Header />
-      <p>app</p>
-    </main>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   );
 }
