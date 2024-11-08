@@ -1,3 +1,10 @@
+import { Header } from './components/header';
+
 export function App() {
-  return <h1>paguei</h1>;
+  return (
+    <main>
+      <Header />
+      <p>app</p>
+    </main>
+  );
 }
