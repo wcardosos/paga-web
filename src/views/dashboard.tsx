@@ -1,15 +1,10 @@
+import { BudgetSummary as BudgetSummaryComponent } from '@/components/budget-summary';
 import { FailFeedback } from '@/components/fail-feedback';
 import { Loading } from '@/components/loading';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { ReferenceMonthSelect } from '@/components/reference-month-select';
+import { BudgetSummary } from '@/shared/models/budget-summary';
 import { useReferenceMonthStore } from '@/stores/reference-month';
+import { fetchBudgetSummary } from '@/use-cases/fetch-budget-summary';
 import { fetchReferenceMonths } from '@/use-cases/fetch-reference-months';
 import { useEffect, useState } from 'react';
 
@@ -23,6 +18,9 @@ export function Dashboard() {
     setReferenceMonths,
     updateSelectedMonth,
   } = useReferenceMonthStore();
+  const [budgetSummary, setBudgetSummary] = useState<BudgetSummary | null>(
+    null,
+  );
 
   useEffect(() => {
     fetchReferenceMonths()
@@ -35,43 +33,35 @@ export function Dashboard() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  const DashboardContent = () => {
-    if (isLoading) return <Loading />;
-    if (hasError)
-      return <FailFeedback>Erro ao tentar carregar os dados</FailFeedback>;
+  useEffect(() => {
+    if (!selectedMonth) return;
 
-    return (
-      <div className="pt-6">
-        <SelectGroup>
-          <SelectLabel className="pl-0 font-normal">
-            Mês de referência
-          </SelectLabel>
-          <Select
-            name="reference-month"
-            onValueChange={updateSelectedMonth}
-            defaultValue={selectedMonth ?? undefined}
-            value={selectedMonth!}
-          >
-            <SelectTrigger className="w-full bg-transparent border-zinc-400">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {referenceMonths.map((referenceMonth) => (
-                <SelectItem key={referenceMonth} value={referenceMonth}>
-                  {referenceMonth}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </SelectGroup>
-      </div>
-    );
-  };
+    setIsLoading(true);
+
+    fetchBudgetSummary(selectedMonth)
+      .then((response) => setBudgetSummary(response.data))
+      .catch(() => setHasError(true))
+      .finally(() => setIsLoading(false));
+  }, [selectedMonth]);
+
+  if (isLoading) return <Loading />;
+  if (hasError)
+    return <FailFeedback>Erro ao tentar carregar os dados</FailFeedback>;
 
   return (
     <>
       <h1 className="text-3xl text-purple-400 font-bold">Dashboard</h1>
-      <DashboardContent />
+      <div className="pt-6 lg:w-80">
+        <ReferenceMonthSelect
+          referenceMonths={referenceMonths}
+          selectedMonth={selectedMonth}
+          updateSelectedMonth={updateSelectedMonth}
+        />
+      </div>
+
+      {budgetSummary && (
+        <BudgetSummaryComponent budgetSummary={budgetSummary} />
+      )}
     </>
   );
 }
