@@ -15,10 +15,10 @@ interface BudgetSummaryProps {
 
 export function BudgetSummary({ budgetSummary }: Readonly<BudgetSummaryProps>) {
   return (
-    <div className="pt-4 py-6 grid lg:grid-cols-2 gap-6">
+    <div className="pt-4 py-6 grid lg:grid-cols-2 gap-2 lg:gap-6">
       <BudgetSummaryBalance value={budgetSummary?.balance ?? 0} />
 
-      <div className="grid grid-cols-2 gap-2 mt-2 lg:mt-0">
+      <div className="grid grid-cols-2 gap-2 lg:mt-0">
         <BudgetSummaryItem
           title="Receitas"
           icon={TrendingUp}
