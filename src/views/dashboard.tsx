@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BudgetSummary as BudgetSummaryComponent } from '@/components/budget-summary';
 import { FailFeedback } from '@/components/fail-feedback';
 import { Goals } from '@/components/goals';
 import { Loading } from '@/components/loading';
 import { ReferenceMonthSelect } from '@/components/reference-month-select';
+import { logout } from '@/lib/auth';
 import { BudgetSummary } from '@/shared/models/budget-summary';
 import { Goal } from '@/shared/models/goal';
 import { useReferenceMonthStore } from '@/stores/reference-month';
@@ -10,6 +12,7 @@ import { fetchBudgetSummary } from '@/use-cases/fetch-budget-summary';
 import { fetchGoals } from '@/use-cases/fetch-goals';
 import { fetchReferenceMonths } from '@/use-cases/fetch-reference-months';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Dashboard() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -25,6 +28,7 @@ export function Dashboard() {
     null,
   );
   const [goals, setGoals] = useState<Goal[] | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchReferenceMonths()
@@ -33,7 +37,14 @@ export function Dashboard() {
 
         setInitialSelectedMonth();
       })
-      .catch(() => setHasError(true))
+      .catch((error: any) => {
+        if (error.response.status === 401) {
+          logout();
+          navigate('/login');
+        } else {
+          setHasError(true);
+        }
+      })
       .finally(() => setIsLoading(false));
   }, []);
 
@@ -44,9 +55,16 @@ export function Dashboard() {
 
     fetchBudgetSummary(selectedMonth)
       .then((response) => setBudgetSummary(response.data))
-      .catch(() => setHasError(true))
+      .catch((error: any) => {
+        if (error.response.status === 401) {
+          logout();
+          navigate('/login');
+        } else {
+          setHasError(true);
+        }
+      })
       .finally(() => setIsLoading(false));
-  }, [selectedMonth]);
+  }, [selectedMonth, navigate]);
 
   useEffect(() => {
     if (!selectedMonth) return;
@@ -55,9 +73,16 @@ export function Dashboard() {
 
     fetchGoals(selectedMonth)
       .then((response) => setGoals(response.data))
-      .catch(() => setHasError(true))
+      .catch((error: any) => {
+        if (error.response.status === 401) {
+          logout();
+          navigate('/login');
+        } else {
+          setHasError(true);
+        }
+      })
       .finally(() => setIsLoading(false));
-  }, [selectedMonth]);
+  }, [selectedMonth, navigate]);
 
   if (isLoading) return <Loading />;
   if (hasError)

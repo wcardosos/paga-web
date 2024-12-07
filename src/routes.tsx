@@ -1,9 +1,24 @@
 import { Dashboard } from './views/dashboard';
+import { Login } from './views/login';
 
-export const appRoutes = [
+interface Route {
+  name: string;
+  element: JSX.Element;
+  path: string;
+}
+
+export const appRoutes: Route[] = [
   {
     name: 'Dashboard',
     element: <Dashboard />,
-    path: '/dashboard',
+    path: '/app/dashboard',
+  },
+];
+
+export const publicRoutes: Route[] = [
+  {
+    name: 'Login',
+    element: <Login />,
+    path: '/login',
   },
 ];

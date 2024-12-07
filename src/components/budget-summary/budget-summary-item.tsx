@@ -20,7 +20,7 @@ export function BudgetSummaryItem({
     <Card>
       <CardHeader
         className={cn(
-          'flex flex-row justify-between w-full items-center',
+          'flex flex-row justify-between w-full items-center pb-4',
           type === 'revenue' && 'text-green-400',
           type === 'expense' && 'text-red-400',
         )}

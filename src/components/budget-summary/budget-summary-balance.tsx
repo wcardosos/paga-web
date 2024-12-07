@@ -12,7 +12,7 @@ export function BudgetSummaryBalance({
 }: Readonly<BudgetSummaryBalanceProps>) {
   return (
     <Card className="bg-purple-300 text-zinc-800 shadow-md lg:h-fit">
-      <CardHeader className="flex flex-row justify-between w-full items-center px-4 pb-4">
+      <CardHeader className="flex flex-row justify-between w-full items-center">
         <CardTitle className="text-xl font-medium">Balanço</CardTitle>
         <Scale className="h-6 w-6" />
       </CardHeader>
