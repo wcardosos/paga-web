@@ -1,5 +1,5 @@
 export enum AUTH_KEYS {
-  AUTH_TOKEN = 'paguei:authToken',
+  AUTH_TOKEN = 'paga:authToken',
 }
 export function getAuthToken() {
   return localStorage.getItem(AUTH_KEYS.AUTH_TOKEN);
