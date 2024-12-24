@@ -14,7 +14,7 @@ export function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between py-6">
+    <header className="flex items-center justify-between p-6">
       <Logo />
       <Button size="icon" variant="ghost" onClick={onLogout}>
         <LogOut className="w-6 h-6 text-purple-400" />
