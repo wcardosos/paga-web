@@ -40,7 +40,7 @@ export function Goals({ goals }: Readonly<GoalsProps>) {
   };
 
   return (
-    <Card>
+    <Card id="metas">
       <CardHeader>
         <CardTitle>Metas</CardTitle>
       </CardHeader>

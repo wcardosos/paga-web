@@ -39,7 +39,7 @@ export function Expenses({ expenses }: Readonly<ExpensesProps>) {
     },
   };
   return (
-    <Card className="mt-6">
+    <Card className="mt-6" id="despesas">
       <CardHeader>
         <CardTitle>Saídas</CardTitle>
       </CardHeader>

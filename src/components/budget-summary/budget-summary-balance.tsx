@@ -21,13 +21,13 @@ export function BudgetSummaryBalance({
 
         <div className="flex flex-col gap-2 pt-4">
           <Button className="w-min rounded-full px-6 py-3 font-medium h-min">
-            Ir para despesas
+            <a href="#despesas">Ir para despesas</a>
           </Button>
           <Button
             className="w-min rounded-full px-6 py-3 font-medium h-min"
             variant="outline"
           >
-            Ir para metas
+            <a href="#metas">Ir para metas</a>
           </Button>
         </div>
       </CardContent>
