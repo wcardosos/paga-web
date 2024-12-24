@@ -1,5 +1,7 @@
+import { Category } from './category';
+
 export interface Goal {
-  category: 'essential' | 'leisure' | 'investments' | 'cards';
+  category: Category;
   amount: number;
   currentAmount: number;
   progress: number;

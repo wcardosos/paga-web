@@ -71,7 +71,7 @@ export function Login() {
   };
 
   return (
-    <div className="py-10 lg:py-16">
+    <div className="py-10 lg:py-16 px-6">
       <div className="flex justify-center">
         <Logo />
       </div>
